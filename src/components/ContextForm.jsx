@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import AgentResponse from '../components/AgentResponse';
 import axios from 'axios';
 import Loading from './Loading';
+import Layout from './Layout';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -25,6 +26,12 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const submitFormData = async (formData) => {
 		try {
+			const agentInfo = JSON.parse(localStorage.getItem('agents'));
+
+			if (agentInfo) {
+				console.log('Agent info:', agentInfo);
+			}
+
 			const response = await axios.post('http://localhost:8000/form-input', formData, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -76,7 +83,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 		return output && <AgentResponse response={output} service={service} />;
 	}
 	return (
-		<div>
+		<Layout>
 			{isLoading ? (
 				<Loading />
 			) : (
@@ -296,7 +303,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 					</div>
 				</>
 			)}
-		</div>
+		</Layout>
 	);
 };
 

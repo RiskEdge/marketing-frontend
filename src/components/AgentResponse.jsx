@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import MarkdownDisplay from './MarkdownDisplay';
 import { IoMdCopy } from 'react-icons/io';
 import copy from 'copy-to-clipboard';
+import Layout from './Layout';
 
 const AgentResponse = ({ response, service }) => {
 	const textRef = useRef();
@@ -17,7 +18,7 @@ const AgentResponse = ({ response, service }) => {
 	};
 
 	return (
-		<>
+		<Layout title={"Agent's Response"}>
 			{console.log(response)}
 			<div className='lg:w-4/5 md:w-4/5 w-5/6 mx-auto my-8'>
 				<h2 className='font-semibold text-3xl text-pink-500'>{service}</h2>
@@ -56,7 +57,7 @@ const AgentResponse = ({ response, service }) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</Layout>
 	);
 };
 export default AgentResponse;

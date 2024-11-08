@@ -4,6 +4,7 @@ import axios from 'axios';
 import Markdown from 'react-markdown';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import ContextForm from '../components/ContextForm';
+import Layout from '../components/Layout';
 
 const AgentDetails = () => {
 	const [response, setResponse] = useState({});
@@ -41,7 +42,7 @@ const AgentDetails = () => {
 
 	const getAgentsInfo = async () => {
 		try {
-			if (localStorage.getItem('agents') || localStorage.getItem('tasks')) {
+			if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
 				const storedAgentAndTaskData = {
 					agents: JSON.parse(localStorage.getItem('agents')) || {},
 					tasks: JSON.parse(localStorage.getItem('tasks')) || {},
@@ -116,126 +117,130 @@ const AgentDetails = () => {
 		return <ContextForm />;
 	}
 	return (
-		<div className='mx-auto my-10 lg:w-4/5'>
-			<h1 className='text-3xl text-blue-600 font-bold'>Agents</h1>
-			<div className='flex flex-col float-right'>
-				<button
-					onClick={toggleEditMode}
-					className=' px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
-					Edit Mode
-				</button>
-				<button
-					onClick={saveChanges}
-					className='w-full px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
-					Save
-				</button>
-				<button
-					onClick={resetChanges}
-					className='w-full px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
-					Reset
-				</button>
+		<Layout>
+			<div className='mx-auto my-10 lg:w-4/5'>
+				<h1 className='text-3xl text-blue-600 font-bold'>Agents</h1>
+				<div className='flex flex-col float-right'>
+					<button
+						onClick={toggleEditMode}
+						className=' px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
+						Edit Mode
+					</button>
+					<button
+						onClick={saveChanges}
+						className='w-full px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
+						Save
+					</button>
+					<button
+						onClick={resetChanges}
+						className='w-full px-4 py-2 mx-auto my-3 border rounded-md border-gray-300 font-bold hover:text-pink-500 hover:border-pink-500 hover:bg-pink-100'>
+						Reset
+					</button>
+				</div>
+				{isLoading ? (
+					<Loading />
+				) : (
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 '>
+						{agents &&
+							Object.keys(agents).map((key) => (
+								<div key={key} className='border border-gray-300 px-4 py-3 m-3'>
+									<h2 className='font-bold text-xl text-pink-500 mb-2'>
+										{agents[key].role}
+									</h2>
+									{editMode ? (
+										<>
+											<div className='mb-3'>
+												<h3 className='font-semibold'>Goal</h3>
+												<textarea
+													name={agents[key].role}
+													rows='5'
+													className='w-full h-fit resize text-wrap p-3'
+													value={agents[key].goal}
+													onChange={(e) => {
+														handleEdit('agent', key, {
+															goal: e.target.value,
+														});
+													}}
+												/>
+											</div>
+											<div className='mb-2'>
+												<h3 className='font-semibold'>Backstory</h3>
+												<textarea
+													// type='textarea'
+													name={agents[key].role}
+													rows='10'
+													className='w-full resize text-wrap p-3'
+													value={agents[key].backstory}
+													onChange={(e) => {
+														handleEdit('agent', key, {
+															backstory: e.target.value,
+														});
+													}}
+												/>
+											</div>
+										</>
+									) : (
+										<>
+											<div className='mb-3'>
+												<h3 className='font-semibold'>Goal</h3>
+												<MarkdownDisplay markdownText={agents[key].goal} />
+											</div>
+											<div className='mb-2'>
+												<h3 className='font-semibold'>Backstory</h3>
+												<MarkdownDisplay
+													markdownText={agents[key].backstory}
+												/>
+											</div>
+										</>
+									)}
+								</div>
+							))}
+					</div>
+				)}
+				<h1 className='text-3xl text-blue-600 font-bold'>Tasks</h1>
+				{isLoading ? (
+					<Loading />
+				) : (
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
+						{tasks &&
+							Object.keys(tasks).map((key) => (
+								<div key={key} className='border border-gray-300 py-3 px-4 m-3'>
+									<h2 className='font-bold text-xl text-pink-500 mb-2'>
+										{tasks[key].agentName}
+									</h2>
+									{editMode ? (
+										<>
+											<div className='mb-2'>
+												<h3 className='font-semibold'>Task Description</h3>
+												<textarea
+													name={tasks[key].agentName}
+													rows='10'
+													className='w-full resize text-wrap p-3'
+													value={tasks[key].description}
+													onChange={(e) => {
+														handleEdit('task', key, {
+															description: e.target.value,
+														});
+													}}
+												/>
+											</div>
+										</>
+									) : (
+										<>
+											<div className='mb-2'>
+												<h3 className='font-semibold'>Task Description</h3>
+												<MarkdownDisplay
+													markdownText={tasks[key].description}
+												/>
+											</div>
+										</>
+									)}
+								</div>
+							))}
+					</div>
+				)}
 			</div>
-			{isLoading ? (
-				<Loading />
-			) : (
-				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 '>
-					{agents &&
-						Object.keys(agents).map((key) => (
-							<div key={key} className='border border-gray-300 px-4 py-3 m-3'>
-								<h2 className='font-bold text-xl text-pink-500 mb-2'>
-									{agents[key].role}
-								</h2>
-								{editMode ? (
-									<>
-										<div className='mb-3'>
-											<h3 className='font-semibold'>Goal</h3>
-											<textarea
-												name={agents[key].role}
-												rows='5'
-												className='w-full h-fit resize text-wrap p-3'
-												value={agents[key].goal}
-												onChange={(e) => {
-													handleEdit('agent', key, {
-														goal: e.target.value,
-													});
-												}}
-											/>
-										</div>
-										<div className='mb-2'>
-											<h3 className='font-semibold'>Backstory</h3>
-											<textarea
-												// type='textarea'
-												name={agents[key].role}
-												rows='10'
-												className='w-full resize text-wrap p-3'
-												value={agents[key].backstory}
-												onChange={(e) => {
-													handleEdit('agent', key, {
-														backstory: e.target.value,
-													});
-												}}
-											/>
-										</div>
-									</>
-								) : (
-									<>
-										<div className='mb-3'>
-											<h3 className='font-semibold'>Goal</h3>
-											<MarkdownDisplay markdownText={agents[key].goal} />
-										</div>
-										<div className='mb-2'>
-											<h3 className='font-semibold'>Backstory</h3>
-											<MarkdownDisplay markdownText={agents[key].backstory} />
-										</div>
-									</>
-								)}
-							</div>
-						))}
-				</div>
-			)}
-			<h1 className='text-3xl text-blue-600 font-bold'>Tasks</h1>
-			{isLoading ? (
-				<Loading />
-			) : (
-				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-					{tasks &&
-						Object.keys(tasks).map((key) => (
-							<div key={key} className='border border-gray-300 py-3 px-4 m-3'>
-								<h2 className='font-bold text-xl text-pink-500 mb-2'>
-									{tasks[key].agentName}
-								</h2>
-								{editMode ? (
-									<>
-										<div className='mb-2'>
-											<h3 className='font-semibold'>Task Description</h3>
-											<textarea
-												name={tasks[key].agentName}
-												rows='10'
-												className='w-full resize text-wrap p-3'
-												value={tasks[key].description}
-												onChange={(e) => {
-													handleEdit('task', key, {
-														description: e.target.value,
-													});
-												}}
-											/>
-										</div>
-									</>
-								) : (
-									<>
-										<div className='mb-2'>
-											<h3 className='font-semibold'>Task Description</h3>
-											<MarkdownDisplay
-												markdownText={tasks[key].description}
-											/>
-										</div>
-									</>
-								)}
-							</div>
-						))}
-				</div>
-			)}
-		</div>
+		</Layout>
 	);
 };
 export default AgentDetails;
