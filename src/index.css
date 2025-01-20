@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: 'Archivo', sans-serif;
+}
+
+.bg-marketing{
+    background-image: url("./assets/images/marketing-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+}
+
+.formBg{
+    background-image: url("./assets/images/formbg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+}
+
+.slim-scrollbar{
+    scrollbar-width: none;
+}
+
+.thin-scrollbar{
+    scrollbar-width:thin;
+    
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    scrollbar-width: thin;
+  }
