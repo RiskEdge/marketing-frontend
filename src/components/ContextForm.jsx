@@ -6,6 +6,7 @@ import axios from 'axios';
 import Loading from './Loading';
 import Layout from './Layout';
 import CustomInput from "../components/CustomInput"
+import { useLocation } from 'react-router-dom';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -73,6 +74,12 @@ const ContextForm = ({ service = '', agent = '' }) => {
 			}
 		},
 	});
+
+	const {pathname} = useLocation();
+
+	const curPath = pathname.split("/")[2];
+	
+	
 	
 
 	useEffect(() => {
@@ -413,7 +420,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 
 							
 								{/* Competitors Context */}
-								<div className='flex flex-col gap-3'>
+								{curPath==="marketing-analysis" &&  <div className='flex flex-col gap-3'>
 									{/* <label
 										className='block text-sm font-medium text-gray-700/40'
 										htmlFor='competitors_context'>
@@ -439,7 +446,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 										label={'Competitors Context'}
 										
 									/>
-								</div>
+								</div>}
 
 								
 
@@ -479,6 +486,8 @@ const ContextForm = ({ service = '', agent = '' }) => {
 										</label>
 									</div>
 								</div>
+
+								{/* Additional Fiels */}
 
 
 								{/* Submit Button */}

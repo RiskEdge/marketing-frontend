@@ -13,6 +13,7 @@ import LoginForm from './components/LoginForm';
 import { useEffect, useState } from 'react';
 import { AuthProvider } from './auth/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
+import CrewOutput from './pages/CrewOutput';
 
 const App = () => {
 	return (
@@ -27,6 +28,7 @@ const App = () => {
 							<Route path='seo-analysis' element={<SeoAnalysis />} />
 							<Route path='content-creation' element={<ContentCreation />} />
 						</Route>
+						<Route path='/output' element={<CrewOutput />} />
 						<Route path='form-details' element={<ContextForm />} />
 						<Route path='/agent-details' element={<AgentDetails />} />
 					</Route>
