@@ -3,11 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import loginImg from "../assets/images/loginImg.png";
 
 const LoginForm = () => {
 	// Define validation schema
 	const validationSchema = Yup.object({
-		username: Yup.string().required('Email is required'),
+		username: Yup.string().required('User Name is required'),
 		password: Yup.string()
 			.min(6, 'Password must be at least 6 characters')
 			.required('Password is required'),
@@ -34,29 +35,39 @@ const LoginForm = () => {
 	};
 
 	return (
-		<div className='flex items-center justify-center min-h-screen bg-gray-100'>
-			<div className='bg-white p-6 rounded shadow-md w-full max-w-md'>
-				<h2 className='text-2xl font-semibold text-center mb-6'>Login</h2>
+        <div className=' bg-gray-200 w-full min-h-screen  flex items-center justify-center p-5 py-24'>
+          <div className='bg-white max-w-3xl mx-auto w-full rounded-3xl shadow-md grid grid-cols-2 p-8 gap-5'>
+              <div className='p-4 col-span-2 md:col-span-1 flex items-center justify-center'>
+              <img src={loginImg} className='max-w-80 sm:max-w-xs' alt="" />
+            </div>
+            <div className="my-5 col-span-2 md:col-span-1 max-w-sm mx-auto w-full bg-white   p-4">
+              <h3 className='text-center  text-2xl lg:text-4xl font-bold mb-8'>Login</h3>
+              <div className='error text-center'>
+                    {/* <p className='text-red-400 mt-3'>{isError && errorMsg}</p> */}
+                </div>
 				<Formik
 					initialValues={{ username: '', password: '' }}
 					validationSchema={validationSchema}
 					onSubmit={handleSubmit}>
 					{() => (
-						<Form className='space-y-4'>
-							<div>
-								<label
-									htmlFor='username'
-									className='block text-sm font-medium text-gray-700'>
-									Username
-								</label>
+						<Form className='space-y-8'>
+							<div className='flex flex-col gap-3'>
+							<div className='relative shadow-md w-full'>
 								<Field
 									type='text'
 									id='username'
 									name='username'
 									// value={username}
-									placeholder='Enter your username'
-									className='mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:ring-blue-200'
+									placeholder=''
+									 className="block px-2.5 pb-2.5 pt-4 w-full text-sm  outline-none text-black border bg-transparent shadow-md rounded-none border-1 border-gray-500 appearance-none  peer"
 								/>
+								<label
+									htmlFor='username'
+									className='absolute text-sm text-gray-800 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:bg-white peer-focus:text-black font-semibold  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'>
+									Username
+								</label>
+								
+							</div>
 								<ErrorMessage
 									name='username'
 									component='div'
@@ -64,21 +75,24 @@ const LoginForm = () => {
 								/>
 							</div>
 
-							<div>
-								<label
-									htmlFor='password'
-									className='block text-sm font-medium text-gray-700'>
-									Password
-								</label>
+							<div className='flex flex-col gap-3'>
+							<div className='relative shadow-md w-full '>
+								
 								<Field
 									type='password'
 									id='password'
 									// value={password}
 									name='password'
-									placeholder='Enter your password'
-									className='mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring focus:ring-blue-200'
+									placeholder=''
+									className="block px-2.5 pb-2.5 pt-4 w-full text-sm  outline-none text-black border bg-transparent shadow-md rounded-none border-1 border-gray-500 appearance-none  peer"
 								/>
-								<ErrorMessage
+								<label
+									htmlFor='password'
+									className='absolute text-sm text-gray-800 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:bg-white peer-focus:text-black font-semibold  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'>
+									Password
+								</label>
+							</div>
+							<ErrorMessage
 									name='password'
 									component='div'
 									className='text-red-500 text-sm mt-1'
@@ -93,8 +107,11 @@ const LoginForm = () => {
 						</Form>
 					)}
 				</Formik>
-			</div>
-		</div>
+              
+            </div>
+          </div>
+      
+    </div>
 	);
 };
 

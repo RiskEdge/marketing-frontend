@@ -7,8 +7,8 @@ import Layout from './Layout';
 const AgentResponse = ({ response, service }) => {
 	const textRef = useRef();
 	// const output = response.result.tasks_output[0];
-	const output = response.result.tasks_output[0];
-	const token_usage = response.result.token_usage;
+	const output = response?.result?.tasks_output ? response?.result?.tasks_output[0] : {};
+	const token_usage = response?.result?.token_usage ;
 	const copyToClipboard = () => {
 		const copyText = textRef.current.value;
 		const isCopied = copy(copyText);
@@ -32,12 +32,12 @@ const AgentResponse = ({ response, service }) => {
 						type='textarea'
 						name='output'
 						ref={textRef}
-						value={output.raw}
+						value={output?.raw}
 						className='hidden'
 						id='output'
 						readOnly
 					/>
-					<MarkdownDisplay markdownText={output.raw} />
+					<MarkdownDisplay markdownText={output?.raw} />
 				</div>
 				<h2 className='font-semibold text-xl text-pink-500'>Token Usage</h2>
 				<div
@@ -45,15 +45,15 @@ const AgentResponse = ({ response, service }) => {
 					className='flex lg:flex-row md:flex-row flex-col py-4 my-3'>
 					<div className='border border-gray-300 m-3 p-3'>
 						<h3 className='font-bold text-lg'>Input Tokens</h3>
-						<p className='text-xl'>{token_usage.prompt_tokens}</p>
+						<p className='text-xl'>{token_usage?.prompt_tokens}</p>
 					</div>
 					<div className='border border-gray-300 m-3 p-3'>
 						<h3 className='font-bold text-lg'>Output Tokens</h3>
-						<p className='text-xl'>{token_usage.completion_tokens}</p>
+						<p className='text-xl'>{token_usage?.completion_tokens}</p>
 					</div>
 					<div className='border border-gray-300 m-3 p-3'>
 						<h3 className='font-bold text-lg'>Total Tokens</h3>
-						<p className='text-xl'>{token_usage.total_tokens}</p>
+						<p className='text-xl'>{token_usage?.total_tokens}</p>
 					</div>
 				</div>
 			</div>
