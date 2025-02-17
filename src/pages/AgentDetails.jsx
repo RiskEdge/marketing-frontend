@@ -51,11 +51,15 @@ const AgentDetails = () => {
 				console.log('From Local Storage');
 				setResponse(storedAgentAndTaskData);
 			} else {
-				const res = await axios.post('http://localhost:8000/agents-info', formData, {
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				});
+				const res = await axios.post(
+					'https://marketing-server.riskedgesolutions.com/agents-info',
+					formData,
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
+				);
 				setResponse(res.data);
 				console.log('From Backend');
 			}

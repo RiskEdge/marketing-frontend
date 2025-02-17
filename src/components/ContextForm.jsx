@@ -34,7 +34,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 
 			const response = await axios.post('http://localhost:8000/form-input', formData, {
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'multipart/form-data',
 				},
 			});
 			console.log('Form submitted successfully:', response.data);
