@@ -12,8 +12,10 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.7.7",
+    "client": "file:",
     "copy-to-clipboard": "^3.3.3",
     "formik": "^2.4.6",
+    "gsap": "^3.12.5",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '../auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Layout = ({ children, title, description, keywords, author }) => {
 	const [isAuthenticated, setIsAuthenticated] = useAuth();
@@ -13,8 +14,13 @@ const Layout = ({ children, title, description, keywords, author }) => {
 		navigate('/login');
 	};
 
+	const location = useLocation();
+
+	const  page = location.pathname.split('/')[1];
+	
+
 	return (
-		<div>
+		<div className='relative'>
 			<Helmet>
 				<meta charSet='utf-8' />
 				<meta name='description' content={description} />
@@ -22,14 +28,16 @@ const Layout = ({ children, title, description, keywords, author }) => {
 				<meta name='author' content={author} />
 				<title>{title}</title>
 			</Helmet>
-			<main>
-				<div className='float-right m-3'>
+			<div className='float-right z-50'>
 					<button
 						onClick={handleClick}
-						className='bg-gray-200 hover:bg-blue-700 hover:text-white text-gray-600 font-bold py-2 px-4 rounded'>
+						className={`absolute text-xs flex flex-col items-center justify-center gap-1 ${page === 'crew' ? "text-white" : "text-gray-800"} z-50 top-6 right-6 bg-transparent hover:border hover:scale-105 transition duration-300 hover:border-red-500 hover:text-red-500 font-bold py-2 px-4 rounded`}>
+						<AiOutlineLogout className='text-2xl' />
 						Logout
 					</button>
 				</div>
+			<main className='relative'>
+				
 				{children}
 			</main>
 		</div>
