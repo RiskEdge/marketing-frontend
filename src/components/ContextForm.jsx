@@ -7,6 +7,7 @@ import Loading from './Loading';
 import Layout from './Layout';
 import CustomInput from "../components/CustomInput"
 import { useLocation } from 'react-router-dom';
+import { TbSelector } from "react-icons/tb";
 import SelectCustom from './SelectCustom';
 
 // Validation schema using Yup
@@ -27,6 +28,26 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	const [output, setOutput] = useState({});
 	const [haveResponse, setHaveResponse] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [tags,setTags] = useState([]);
+
+		const [isModalOpen, setIsModalOpen] = useState(false);
+		const [selectedOption, setSelectedOption] = useState(''); // For storing selected option
+	  
+		const handleOpenModal = () => {
+		  setIsModalOpen(true); // Open the modal on button click
+		};
+	  
+		const handleCloseModal = () => {
+		  setIsModalOpen(false); // Close the modal
+		};
+	  
+		const handleSelectOption = (option) => {
+		  setSelectedOption(option); // Update the selected option
+		  setIsModalOpen(false); // Close the modal after selection
+		};
+
+
+
 	const submitFormData = async (formData) => {
 		try {
 			const agentInfo = JSON.parse(localStorage.getItem('agents'));
@@ -63,12 +84,18 @@ const ContextForm = ({ service = '', agent = '' }) => {
 			competitors_context: localStorage.getItem('competitors_context') || '',
 			content_type: localStorage.getItem('content_type') || '',
 			additional_info: localStorage.getItem('additional_info') || '',
+			tags:[],
+			aiModel:"",
 		},
 		validationSchema,
 		onSubmit: async (values) => {
 			try {
 				setIsLoading(true);
+				formik.values.tags = tags
+				formik.values.aiModel = selectedOption
 				submitFormData(values);
+				console.log(formik.values);
+				
 				formik.resetForm();
 			} catch (error) {
 				alert('Failed to submit the form!');
@@ -81,16 +108,18 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	const curPath = pathname.split("/")[2];
 	
 	
+	console.log(formik.values);
+	
 	
 
 	useEffect(() => {
-		Object.keys(formik.values).forEach((key) => {
-			localStorage.setItem(key, formik.values[key]);
-		});
-	}, [formik.values]);
+		localStorage.setItem("formikData", JSON.stringify(formik.values));
+	  }, [formik.values]);
+
+
 
 	if (haveResponse) {
-		return output && <AgentResponse response={output} service={service} />;
+		return output && <AgentResponse response={output} service={service}  />;
 	}
 	return (
 		<Layout>
@@ -272,7 +301,20 @@ const ContextForm = ({ service = '', agent = '' }) => {
 								{curPath==="content-creation" &&  <div className='flex flex-col gap-3'>
 									
 									<SelectCustom 
-										name={""}
+										name={"tags"}
+										tags={tags}
+										setTags={setTags}
+										options={[
+											{label:"Funny",value:"Funny"},
+											{label:"Relatable",value:"Relatable"},
+											{label:"Descriptive",value:"Descriptive"},
+											{label:"Engaging",value:"Engaging"},
+											{label:"Controversial",value:"Controversial"},
+											{label:"Poetic",value:"Poetic"},
+											{label:"Relevant",value:"Relevant"},
+											]}
+										multi={true}
+										defaultValue={{label:"Funny",value:"Funny"}}
 									/>
 								</div>}
 
@@ -356,11 +398,43 @@ const ContextForm = ({ service = '', agent = '' }) => {
 										Proceed
 									</button>
 
-									<button
-										type='submit'
-										className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2'>
-										Proceed
-									</button>
+									<div className="relative w-full">
+											{/* Button */}
+											<button
+												type="button"
+												className="w-full flex gap-2 justify-center items-center text-gray-800 py-2 px-4 rounded-md border border-indigo-700 focus:outline-none focus:ring-indigo-500 focus:ring-offset-2"
+												onClick={handleOpenModal} // Open the modal on click
+											>
+												{selectedOption || 'ChatGPT'} <TbSelector className="text-xl" />
+											</button>
+
+											{/* Modal Popup */}
+											{isModalOpen && (
+												<div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
+												<div className="bg-white p-6 rounded-lg shadow-md max-w-xs w-full">
+													<h3 className="text-xl font-semibold mb-4">Select a Model</h3>
+													<button
+													onClick={() => handleSelectOption('Gemini')}
+													className="block w-full text-left px-4 py-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-md"
+													>
+													Gemini
+													</button>
+													<button
+													onClick={() => handleSelectOption('ChatGPT')}
+													className="block w-full text-left px-4 py-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-md"
+													>
+													ChatGPT
+													</button>
+													<button
+													onClick={handleCloseModal}
+													className="mt-4 w-full text-center py-2 bg-gray-300 rounded-md"
+													>
+													Close
+													</button>
+												</div>
+												</div>
+											)}
+										</div>
 								</div>
 							</form>
 						</div>

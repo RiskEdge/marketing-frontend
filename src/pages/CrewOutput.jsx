@@ -18,17 +18,17 @@ const CrewOutput = () => {
 		token_usage: marketingResponse.result.token_usage,
 	};
 
-	const seoOutput = {
-		output: seoResponse.result.tasks_output[0],
-		token_usage: seoResponse.result.token_usage,
-	};
+	// const seoOutput = {
+	// 	output: seoResponse.result.tasks_output[0],
+	// 	token_usage: seoResponse.result.token_usage,
+	// };
 
-	const contentOutput = {
-		output: contentResponse.result.tasks_output[0],
-		token_usage: contentResponse.result.token_usage,
-	};
+	// const contentOutput = {
+	// 	output: contentResponse.result.tasks_output[0],
+	// 	token_usage: contentResponse.result.token_usage,
+	// };
 
-	const crewOutputs = [ marketingOutput,seoOutput, contentOutput];
+	const crewOutputs = [ marketingOutput];
 
 	/* useEffect(() => {
 		const getCrewOutput = async () => {
