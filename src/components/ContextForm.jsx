@@ -7,6 +7,7 @@ import Loading from './Loading';
 import Layout from './Layout';
 import CustomInput from "../components/CustomInput"
 import { useLocation } from 'react-router-dom';
+import SelectCustom from './SelectCustom';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -264,159 +265,12 @@ const ContextForm = ({ service = '', agent = '' }) => {
 
 								</div>
 
-								<div className="flex gap-5 w-full flex-col sm:flex-row">
-									{/* Action */}
-									<div className='flex flex-col gap-3 w-full'>
-										{/* <label
-											className='block text-sm font-medium text-gray-700/40'
-											htmlFor='agent'>
-											What do you want to do today?
-										</label> */}
-										{/* <select
-											id='agent'
-											name='agent'
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-											value={formik.values.agent}
-											className={`mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-												formik.touched.agent && formik.errors.agent
-													? 'border-red-500'
-													: ''
-											}`}> */}
-											{/* <option value={agent}>{service}</option>{' '}
-											
-											<option value='marketing_analyst'>Marketing Analysis</option>
-											<option value='SEO_specialist'>
-												Search Engine Optimization
-											</option>
-											<option value='content_creator'>Content Creation</option>
-										</select> */}
-										<div className='relative shadow-md w-full '>
-											<select
-												id='agent'
-												name='agent'
-												onChange={formik.handleChange}
-												onBlur={formik.handleBlur}
-												value={formik.values.agent}
-												className={`block px-2.5 pb-2.5 pt-4 w-full text-sm  outline-none text-black border bg-transparent shadow-md rounded-none border-1 ${formik.touched.agent && formik.errors.agent ? "border-red-600" : "border-gray-500"} appearance-none  peer`}
-											>
-												<option value={agent}>{service}</option>{' '}
-												{/* Default option with empty value */}
-												<option value='marketing_analyst'>Marketing Analysis</option>
-												<option value='SEO_specialist'>
-													Search Engine Optimization
-												</option>
-												<option value='content_creator'>Content Creation</option>
-											</select>
-											<label
-												htmlFor="agent"
-												className={`absolute text-sm ${formik.touched.agent && formik.errors.agent ? "text-red-600" : "text-gray-800"} duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:bg-white peer-focus:text-black font-semibold  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}>
-												What do you want to do today?
-											</label>
-										
-									</div>
-
-
-										{formik.touched.agent && formik.errors.agent ? (
-											<div className='text-red-500 text-xs'>
-												{formik.errors.agent}
-											</div>
-										) : null}
-									</div>
-
-									{/* Content Type */}
-									{formik.values.agent ==="content_creator" && 
+								{curPath==="content-creation" &&  <div className='flex flex-col gap-3'>
 									
-									<div className='flex flex-col gap-3 w-full'>
-										{/* <label
-											className='block text-sm font-medium text-gray-700/40'
-											htmlFor='agent'>
-											What do you want to do today?
-										</label> */}
-										{/* <select
-											id='agent'
-											name='agent'
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-											value={formik.values.agent}
-											className={`mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-												formik.touched.agent && formik.errors.agent
-													? 'border-red-500'
-													: ''
-											}`}> */}
-											{/* <option value={agent}>{service}</option>{' '}
-											
-											<option value='marketing_analyst'>Marketing Analysis</option>
-											<option value='SEO_specialist'>
-												Search Engine Optimization
-											</option>
-											<option value='content_creator'>Content Creation</option>
-										</select> */}
-										<div className='relative shadow-md w-full '>
-											<select
-												id='content_type'
-												name='content_type'
-												onChange={formik.handleChange}
-												onBlur={formik.handleBlur}
-												value={formik.values.content_type}
-												className={`block px-2.5 pb-2.5 pt-4 w-full text-sm  outline-none text-black border bg-transparent shadow-md rounded-none border-1 ${formik.touched.agent && formik.errors.agent ? "border-red-600" : "border-gray-500"} appearance-none  peer`}
-											>
-												<option value=''>Select content form</option>
-												{/* Default option with empty value */}
-												<option value='LinkedIn post'>Linked Post</option>
-												<option value='Instagram post'>Instagram Post</option>
-												<option value='Twitter post'>Twitter Post</option>
-											</select>
-											<label
-												htmlFor="content_type"
-												className={`absolute text-sm ${formik.touched.agent && formik.errors.agent ? "text-red-600" : "text-gray-800"} duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:bg-white peer-focus:text-black font-semibold  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}>
-												Content Type
-											</label>
-										
-									</div>
-
-
-									{formik.touched.content_type && formik.errors.content_type ? (
-											<div className='text-red-500 text-xs'>
-												{formik.errors.content_type}
-											</div>
-										) : null}
-									</div>
-
-
-									// <div className='flex flex-col gap-3'>
-									// 	<label
-									// 		className='block text-sm font-medium text-gray-700/40'
-									// 		htmlFor='content_type'>
-									// 		Content Type
-									// 	</label>
-									// 	<select
-									// 		id='content_type'
-									// 		name='content_type'
-									// 		onChange={formik.handleChange}
-									// 		onBlur={formik.handleBlur}
-									// 		value={formik.values.content_type}
-									// 		className={`mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
-									// 			formik.touched.agent && formik.errors.agent
-									// 				? 'border-red-500'
-									// 				: ''
-									// 		}`}>
-									// 		<option value=''>Select content form</option>
-									// 		{/* Default option with empty value */}
-									// 		<option value='LinkedIn post'>Linked Post</option>
-									// 		<option value='Instagram post'>Instagram Post</option>
-									// 		<option value='Twitter post'>Twitter Post</option>
-									// 	</select>
-									// 	{formik.touched.content_type && formik.errors.content_type ? (
-									// 		<div className='text-red-500 text-xs'>
-									// 			{formik.errors.content_type}
-									// 		</div>
-									// 	) : null}
-									// </div>
-									
-									}
-
-								</div>
+									<SelectCustom 
+										name={"depth"}
+									/>
+								</div>}
 
 							
 								{/* Competitors Context */}
@@ -491,7 +345,13 @@ const ContextForm = ({ service = '', agent = '' }) => {
 
 
 								{/* Submit Button */}
-								<div>
+								<div className='flex gap-3 '>
+									<button
+										type='submit'
+										className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2'>
+										Proceed
+									</button>
+
 									<button
 										type='submit'
 										className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2'>
