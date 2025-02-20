@@ -43,25 +43,25 @@ const AgentDetails = () => {
 
 	const getAgentsInfo = async () => {
 		try {
+			const res = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}agents-info`,
+				formData,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
 			if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
 				const storedAgentAndTaskData = {
 					agents: JSON.parse(localStorage.getItem('agents')) || {},
 					tasks: JSON.parse(localStorage.getItem('tasks')) || {},
 				};
 				setIsLoading(false);
-				setResponse(storedAgentAndTaskData);
+				// setResponse(storedAgentAndTaskData);
 				setAgents(storedAgentAndTaskData.agents);
 				setTasks(storedAgentAndTaskData.tasks);
 			} else {
-				const res = await axios.post(
-					`${import.meta.env.VITE_SERVER_URL}agents-info`,
-					formData,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
 				setResponse(res.data);
 				setAgents(res.data?.agents);
 				setTasks(res.data?.tasks);
