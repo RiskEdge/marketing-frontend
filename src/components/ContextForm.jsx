@@ -131,27 +131,31 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													: ''
 											}`}
 										/> */}
-										<CustomInput 
-											id='company_name'
-											name='company_name'
-											type='text'
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-											value={formik.values.company_name}
-											isError={formik.touched.company_name && formik.errors.company_name}
-											htmlFor={"company_name"}
-											label={"Company Name"}
-										/>
-										{formik.touched.company_name && formik.errors.company_name ? (
-											<div className='text-red-500 text-xs'>
-												{formik.errors.company_name}
-											</div>
-										) : null}
-									</div>
+											<CustomInput
+												id='company_name'
+												name='company_name'
+												type='text'
+												onChange={formik.handleChange}
+												onBlur={formik.handleBlur}
+												value={formik.values.company_name}
+												isError={
+													formik.touched.company_name &&
+													formik.errors.company_name
+												}
+												htmlFor={'company_name'}
+												label={'Company Name'}
+											/>
+											{formik.touched.company_name &&
+											formik.errors.company_name ? (
+												<div className='text-red-500 text-xs'>
+													{formik.errors.company_name}
+												</div>
+											) : null}
+										</div>
 
-									{/* Industry */}
-									<div className='flex flex-col gap-3 w-full'>
-										{/* <label
+										{/* Industry */}
+										<div className='flex flex-col gap-3 w-full'>
+											{/* <label
 											className='block text-sm font-medium text-gray-700/40'
 											htmlFor='industry'>
 											Industry
@@ -170,28 +174,28 @@ const ContextForm = ({ service = '', agent = '' }) => {
 											}`}
 										/> */}
 
-										<CustomInput 
-											id='industry'
-											name='industry'
-											type='text'
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-											value={formik.values.industry}
-											label={"Industry"}
-											htmlFor={"industry"}
-											isError={formik.touched.industry && formik.errors.industry}
-										/>
+											<CustomInput
+												id='industry'
+												name='industry'
+												type='text'
+												onChange={formik.handleChange}
+												onBlur={formik.handleBlur}
+												value={formik.values.industry}
+												label={'Industry'}
+												htmlFor={'industry'}
+												isError={
+													formik.touched.industry &&
+													formik.errors.industry
+												}
+											/>
 
-
-										{formik.touched.industry && formik.errors.industry ? (
-											<div className='text-red-500 text-xs'>
-												{formik.errors.industry}
-											</div>
-										) : null}
+											{formik.touched.industry && formik.errors.industry ? (
+												<div className='text-red-500 text-xs'>
+													{formik.errors.industry}
+												</div>
+											) : null}
+										</div>
 									</div>
-
-
-								</div>
 
 								{/* Company Website */}
 								<div className='flex flex-col gap-3'>
@@ -214,25 +218,27 @@ const ContextForm = ({ service = '', agent = '' }) => {
 												: ''
 										}`}
 									/> */}
-									<CustomInput 
-										id='company_website'
-										name='company_website'
-										type='url'
-										onChange={formik.handleChange}
-										onBlur={formik.handleBlur}
-										value={formik.values.company_website}
-										label={"Company Website"}
-										htmlFor={"company_website"}
-										isError={formik.touched.company_website && formik.errors.company_website}
-									/>
-									{formik.touched.company_website && formik.errors.company_website ? (
-										<div className='text-red-500 text-xs'>
-											{formik.errors.company_website}
-										</div>
-									) : null}
-								</div>
-
-								
+										<CustomInput
+											id='company_website'
+											name='company_website'
+											type='url'
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.company_website}
+											label={'Company Website'}
+											htmlFor={'company_website'}
+											isError={
+												formik.touched.company_website &&
+												formik.errors.company_website
+											}
+										/>
+										{formik.touched.company_website &&
+										formik.errors.company_website ? (
+											<div className='text-red-500 text-xs'>
+												{formik.errors.company_website}
+											</div>
+										) : null}
+									</div>
 
 								{/* Services */}
 								<div className='flex flex-col gap-3'>
@@ -251,24 +257,22 @@ const ContextForm = ({ service = '', agent = '' }) => {
 										className='mt-1 block p-2 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
 									/> */}
 
-									<CustomInput 
-										id='services'
-										name='services'
-										type='text'
-										onChange={formik.handleChange}
-										onBlur={formik.handleBlur}
-										value={formik.values.services}
-										htmlFor={'services'}
-										label={'Services(Optional)'}
-
-									/>
-
-								</div>
+										<CustomInput
+											id='services'
+											name='services'
+											type='text'
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.services}
+											htmlFor={'services'}
+											label={'Services(Optional)'}
+										/>
+									</div>
 
 								{curPath==="content-creation" &&  <div className='flex flex-col gap-3'>
 									
 									<SelectCustom 
-										name={"depth"}
+										name={""}
 									/>
 								</div>}
 

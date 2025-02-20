@@ -6,9 +6,8 @@ import AgentDetail from '../components/AgentDetail';
 import TaskDetail from '../components/TaskDetail';
 import ContextForm from '../components/ContextForm';
 import Layout from '../components/Layout';
-import { GrUserManager } from "react-icons/gr";
-import { BiTask } from "react-icons/bi";
-
+import { GrUserManager } from 'react-icons/gr';
+import { BiTask } from 'react-icons/bi';
 
 const AgentDetails = () => {
 	const [response, setResponse] = useState({});
@@ -44,21 +43,25 @@ const AgentDetails = () => {
 
 	const getAgentsInfo = async () => {
 		try {
+			const res = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}agents-info`,
+				formData,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
 			if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
 				const storedAgentAndTaskData = {
 					agents: JSON.parse(localStorage.getItem('agents')) || {},
 					tasks: JSON.parse(localStorage.getItem('tasks')) || {},
 				};
 				setIsLoading(false);
-				setResponse(storedAgentAndTaskData);
+				// setResponse(storedAgentAndTaskData);
 				setAgents(storedAgentAndTaskData.agents);
 				setTasks(storedAgentAndTaskData.tasks);
 			} else {
-				const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}agents-info`, formData, {
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				});
 				setResponse(res.data);
 				setAgents(res.data?.agents);
 				setTasks(res.data?.tasks);
@@ -111,12 +114,14 @@ const AgentDetails = () => {
 	return (
 		<Layout>
 			<div className='w-full h-full bg-gray-100'>
-				<div className="lg:mx-auto  lg:w-4/5 py-12 px-4 ">
-					<h1 className="text-4xl md:text-5xl justify-center mb-12 text-blue-600 font-bold flex items-center gap-2">Agents <GrUserManager /></h1>
+				<div className='lg:mx-auto  lg:w-4/5 py-12 px-4 '>
+					<h1 className='text-4xl md:text-5xl justify-center mb-12 text-blue-600 font-bold flex items-center gap-2'>
+						Agents <GrUserManager />
+					</h1>
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8'>
 							{agents &&
 								Object.keys(agents).map((key) => (
 									<AgentDetail
@@ -129,22 +134,24 @@ const AgentDetails = () => {
 								))}
 						</div>
 					)}
-					<h1 className="text-5xl my-12 flex items-center justify-center text-blue-600 font-bold">Tasks <BiTask /></h1>
+					<h1 className='text-5xl my-12 flex items-center justify-center text-blue-600 font-bold'>
+						Tasks <BiTask />
+					</h1>
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-min">
+						<div className='grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-min'>
 							{tasks &&
 								Object.keys(tasks).map((key) => (
-								<TaskDetail
-									key={key}
-									task={tasks[key]}
-									taskKey={key}
-									onSave={saveTask}
-									onReset={resetTask}
-								/>
+									<TaskDetail
+										key={key}
+										task={tasks[key]}
+										taskKey={key}
+										onSave={saveTask}
+										onReset={resetTask}
+									/>
 								))}
-							</div>
+						</div>
 					)}
 				</div>
 			</div>
