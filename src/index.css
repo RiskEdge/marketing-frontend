@@ -21,8 +21,14 @@
     background-position: 0%;
 }
 
-.slim-scrollbar{
+.hide-scrollbar{
     scrollbar-width: none;
+    
+}
+
+.hide-scrollbar::-webkit-scrollbar{
+    scrollbar-width: none;
+    
 }
 
 .thin-scrollbar{
