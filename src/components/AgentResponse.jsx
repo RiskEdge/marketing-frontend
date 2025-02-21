@@ -25,7 +25,7 @@ const AgentResponse = ({ response, service }) => {
 					{service}
 				</h2>
 				<div
-					className='max-w-2xl border lg:4/5 md:4/5 px-10 py-6 bg-white shadow-xl'
+					className='max-w-3xl border lg:4/5 md:4/5 px-10 py-6 bg-white shadow-xl'
 					key={output.agent + 'output'}>
 					<div className='w-full mx-auto flex  justify-center items-start'>
 						<div className='text-3xl'>
