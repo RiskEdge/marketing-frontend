@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { AuthProvider } from './auth/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
 import CrewOutput from './pages/CrewOutput';
+import AgentResponse from './components/AgentResponse';
 
 const App = () => {
 	return (
@@ -24,9 +25,9 @@ const App = () => {
 						<Route path='/' element={<IndexPage />} />
 						<Route path='/crew'>
 							<Route path='/crew' element={<CrewAgentSelection />} />
-							<Route path='marketing-analysis' element={<MarketingAnalysis />} />
-							<Route path='seo-analysis' element={<SeoAnalysis />} />
-							<Route path='content-creation' element={<ContentCreation />} />
+							<Route path='marketing-analyst' element={<MarketingAnalysis />} />
+							<Route path='seo-specialist' element={<SeoAnalysis />} />
+							<Route path='content-writer' element={<ContentCreation />} />
 						</Route>
 						<Route path='/output' element={<CrewOutput />} />
 						<Route path='form-details' element={<ContextForm />} />
@@ -34,6 +35,7 @@ const App = () => {
 					</Route>
 					<Route path='*' element={<PageNotFound />} />
 					<Route path='/login' element={<LoginForm />} />
+					<Route path='/agent-response' element={<AgentResponse />} />
 				</Routes>
 			</BrowserRouter>
 		</AuthProvider>
