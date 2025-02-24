@@ -263,32 +263,34 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													</div>
 												) : null}
 											</div>
-											<div className='flex flex-col gap-3'>
-												<CustomInput
-													id='creativity'
-													name='creativity'
-													type='range'
-													// min={0}
-													// max={1}
-													// step={0.1}
-													onChange={formik.handleChange}
-													onBlur={formik.handleBlur}
-													value={formik.values.creativity}
-													htmlFor={'creativity'}
-													label={'Creativity'}
-													isError={
-														formik.touched.creativity &&
-														formik.errors.creativity
-													}
+										<div className="flex flex-col gap-3 my-4">
+											<label htmlFor="creativity">Creativity</label>
+											
+											<div className="range-container">
+												<span className="emoji" id="min-emoji">😞</span> 
+												
+												<input 
+												className="range-slider" 
+												id="creativity"
+												name="creativity"
+												type="range"
+												min="0"
+												max="100"
+												onChange={formik.handleChange}
+												onBlur={formik.handleBlur}
+												value={formik.values.creativity}
 												/>
-
-												{formik.touched.creativity &&
-												formik.errors.creativity ? (
-													<div className='text-red-500 text-xs'>
-														{formik.errors.creativity}
-													</div>
-												) : null}
+												
+												<span className="emoji" id="max-emoji">😁</span> 
 											</div>
+
+											{formik.touched.creativity && formik.errors.creativity ? (
+												<div className="text-red-500 text-xs">
+												{formik.errors.creativity}
+												</div>
+											) : null}
+											</div>
+
 											<SelectCustom
 												name={'tags'}
 												tags={tags}

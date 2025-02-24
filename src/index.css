@@ -39,3 +39,66 @@
 .thin-scrollbar::-webkit-scrollbar-thumb {
     scrollbar-width: thin;
   }
+
+
+  .range-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .range-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80%;  /* Adjusted width */
+    height: 4px; /* Slim path */
+    background: #ddd; /* Light gray background */
+    border-radius: 2px;
+    outline: none;
+    transition: background 0.3s ease;
+  }
+  
+  .range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .range-slider::-webkit-slider-thumb:hover {
+    background: #2980b9;
+  }
+  
+  .range-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+  }
+  
+  .range-slider::-moz-range-thumb:hover {
+    background: #2980b9;
+  }
+  
+  .range-slider::-ms-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3498db;
+    cursor: pointer;
+  }
+  
+  .range-slider::-ms-thumb:hover {
+    background: #2980b9;
+  }
+  
+  .emoji {
+    font-size: 24px; /* Size of the emoji */
+  }
+  
