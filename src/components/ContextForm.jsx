@@ -68,6 +68,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 			// if (agentInfo) {
 			// 	console.log('Agent info:', agentInfo);
 			// }
+			console.log(curPath);
 
 			const response = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}${curPath}`,
@@ -108,9 +109,11 @@ const ContextForm = ({ service = '', agent = '' }) => {
 		validationSchema,
 		onSubmit: async (values) => {
 			try {
-				if (!values.topic.trim()) {
-					formik.setErrors({ topic: 'Topic is required' }); // ✅ Manually set error
-					return;
+				if (curPath === 'content-writer') {
+					if (!values.topic.trim()) {
+						formik.setErrors({ topic: 'Topic is required' }); // ✅ Manually set error
+						return;
+					}
 				}
 				setIsLoading(true);
 				formik.values.tags = JSON.stringify(tags);
@@ -257,6 +260,32 @@ const ContextForm = ({ service = '', agent = '' }) => {
 												{formik.touched.topic && formik.errors.topic ? (
 													<div className='text-red-500 text-xs'>
 														{formik.errors.topic}
+													</div>
+												) : null}
+											</div>
+											<div className='flex flex-col gap-3'>
+												<CustomInput
+													id='creativity'
+													name='creativity'
+													type='range'
+													// min={0}
+													// max={1}
+													// step={0.1}
+													onChange={formik.handleChange}
+													onBlur={formik.handleBlur}
+													value={formik.values.creativity}
+													htmlFor={'creativity'}
+													label={'Creativity'}
+													isError={
+														formik.touched.creativity &&
+														formik.errors.creativity
+													}
+												/>
+
+												{formik.touched.creativity &&
+												formik.errors.creativity ? (
+													<div className='text-red-500 text-xs'>
+														{formik.errors.creativity}
 													</div>
 												) : null}
 											</div>

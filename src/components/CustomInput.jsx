@@ -11,6 +11,9 @@ const CustomInput = ({
 	onBlur,
 	htmlFor,
 	isError,
+	// min = '0',
+	// max = '1',
+	// step = '0.1',
 }) => {
 	return (
 		<div className='relative shadow-md w-full '>
@@ -22,9 +25,12 @@ const CustomInput = ({
 				onChange={onChange}
 				onBlur={onBlur}
 				placeholder=''
-				className={`block px-2.5 pb-2.5 pt-4 w-full text-sm  outline-none text-black border bg-transparent shadow-md rounded-none border-1 ${
+				// min={min}
+				// max={max}
+				// step={step}
+				className={`block px-2.5 pb-2.5 pt-4 w-full text-sm outline-none text-black border bg-transparent shadow-md rounded-none border-1 ${
 					isError ? 'border-red-600' : 'border-gray-500'
-				} appearance-none  peer`}
+				} appearance-none peer`}
 			/>
 			<label
 				htmlFor={htmlFor}

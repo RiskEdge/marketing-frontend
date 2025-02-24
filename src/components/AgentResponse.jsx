@@ -45,16 +45,18 @@ const AgentResponse = ({ response, service, formdata }) => {
 						<h2 className='font-bold text-pink-500 text-center my-6 lg:text-3xl  md:text-5xl text-3xl'>
 							Output
 						</h2>
-						<div className='w-full mx-auto flex relative justify-center items-start'>
-							<div className='text-2xl absolute top-0 right-5'>
+
+						<div className='w-full mx-auto flex flex-col relative justify-center items-start'>
+							<div
+								className='text-xl relative w-full flex justify-center	
+							 items-center bg-pink-200 rounded-md py-1 hover:bg-pink-500 hover:text-white'>
 								<button onClick={copyToClipboard}>
 									{copyText ? (
 										<BsClipboardCheck />
 									) : (
-										<p>
-											{' '}
+										<p className='flex flex-row items-center '>
 											<IoMdCopy className='text-3xl flex flex-row gap-2 items-center' />{' '}
-											<span className='text-sm'>Copy</span>
+											<span className='text-sm'>Copy to Clipboard</span>
 										</p>
 									)}
 								</button>
