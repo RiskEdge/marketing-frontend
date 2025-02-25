@@ -23,6 +23,7 @@ const validationSchema = Yup.object({
 	// agent: Yup.string().required('Agent is required'),
 	services: Yup.string(),
 	topic: Yup.string(),
+	creativity: Yup.number(),
 	competitors_context: Yup.string(),
 	content_type: Yup.string(),
 	additional_info: Yup.string(),
@@ -38,6 +39,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [tags, setTags] = useState([]);
 	const [contentType, setContentType] = useState('LinkedIn Post');
+	const [creativity, setCreativity] = useState(0.5);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedOption, setSelectedOption] = useState('ChatGPT'); // For storing selected option
@@ -100,6 +102,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 			// agent: agent || localStorage.getItem('agent') || '',
 			services: localStorage.getItem('services') || '',
 			topic: localStorage.getItem('topic') || '',
+			creativity: localStorage.getItem('creativity') || 0.5,
 			competitors_context: localStorage.getItem('competitors_context') || '',
 			content_type: localStorage.getItem('content_type') || 'LinkedIn Post',
 			additional_info: localStorage.getItem('additional_info') || '',
@@ -117,6 +120,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 				}
 				setIsLoading(true);
 				formik.values.tags = JSON.stringify(tags);
+				formik.values.creativity = creativity;
 				formik.values.content_type = contentType;
 				formik.values.llm = selectedOption;
 				setFormData(values);
@@ -263,24 +267,43 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													</div>
 												) : null}
 											</div>
-											<div className='flex flex-col gap-3'>
-												<CustomInput
-													id='creativity'
-													name='creativity'
-													type='range'
-													// min={0}
-													// max={1}
-													// step={0.1}
-													onChange={formik.handleChange}
-													onBlur={formik.handleBlur}
-													value={formik.values.creativity}
-													htmlFor={'creativity'}
-													label={'Creativity'}
-													isError={
-														formik.touched.creativity &&
-														formik.errors.creativity
-													}
-												/>
+											<div className='flex flex-col gap-3 my-4'>
+												<label
+													htmlFor='creativity'
+													className='block text-sm font-medium text-gray-900'>
+													Creativity
+												</label>
+
+												<div className='range-container flex flex-col'>
+													<div className='flex justify-between text-sm'>
+														<span className='emoji' id='min-emoji'>
+															0 (Not Creative)
+														</span>
+														<span className='emoji' id='max-emoji'>
+															1 (Creative)
+														</span>
+													</div>
+
+													<input
+														className='range-slider w-full'
+														id='creativity'
+														name='creativity'
+														type='range'
+														min={0}
+														max={1}
+														step={0.1}
+														// onChange={formik.handleChange}
+														onChange={(e) => {
+															formik.setFieldValue(
+																'creativity',
+																e.target.value
+															);
+															setCreativity(e.target.value);
+														}}
+														onBlur={formik.handleBlur}
+														value={formik.values.creativity}
+													/>
+												</div>
 
 												{formik.touched.creativity &&
 												formik.errors.creativity ? (
@@ -289,50 +312,74 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													</div>
 												) : null}
 											</div>
-											<SelectCustom
-												name={'tags'}
-												tags={tags}
-												setTags={setTags}
-												options={[
-													{ label: 'Funny', value: 'Funny' },
-													{ label: 'Relatable', value: 'Relatable' },
-													{ label: 'Descriptive', value: 'Descriptive' },
-													{ label: 'Engaging', value: 'Engaging' },
-													{
-														label: 'Controversial',
-														value: 'Controversial',
-													},
-													{ label: 'Poetic', value: 'Poetic' },
-													{ label: 'Relevant', value: 'Relevant' },
-												]}
-												multi={true}
-												defaultValue={{ label: 'Funny', value: 'Funny' }}
-											/>
-											<SelectCustom
-												name={'content_type'}
-												tags={contentType}
-												setTags={setContentType}
-												options={[
-													{ label: 'Blog Post', value: 'Blog Post' },
-													{
-														label: 'Instagram Post',
-														value: 'Instagram Post',
-													},
-													{
+
+											<div>
+												<label
+													htmlFor='tags'
+													className='block text-sm font-medium text-gray-800'>
+													Tags (Tone of your content)
+												</label>
+												<SelectCustom
+													id='tags'
+													name={'tags'}
+													tags={tags}
+													setTags={setTags}
+													options={[
+														{ label: 'Funny', value: 'Funny' },
+														{ label: 'Relatable', value: 'Relatable' },
+														{
+															label: 'Descriptive',
+															value: 'Descriptive',
+														},
+														{ label: 'Engaging', value: 'Engaging' },
+														{
+															label: 'Controversial',
+															value: 'Controversial',
+														},
+														{ label: 'Poetic', value: 'Poetic' },
+														{ label: 'Relevant', value: 'Relevant' },
+													]}
+													multi={true}
+													defaultValue={{
+														label: 'Funny',
+														value: 'Funny',
+													}}
+												/>
+											</div>
+
+											<div>
+												<label
+													htmlFor='content_type'
+													className='block text-sm font-medium text-gray-800'>
+													Content Type
+												</label>
+												<SelectCustom
+													id={'content_type'}
+													name={'content_type'}
+													tags={contentType}
+													setTags={setContentType}
+													options={[
+														{ label: 'Blog Post', value: 'Blog Post' },
+														{
+															label: 'Instagram Post',
+															value: 'Instagram Post',
+														},
+														{
+															label: 'LinkedIn Post',
+															value: 'LinkedIn Post',
+														},
+														{
+															label: 'Twitter Post',
+															value: 'Twitter Post',
+														},
+													]}
+													multi={false}
+													defaultValue={{
 														label: 'LinkedIn Post',
 														value: 'LinkedIn Post',
-													},
-													{
-														label: 'Twitter Post',
-														value: 'Twitter Post',
-													},
-												]}
-												multi={false}
-												defaultValue={{
-													label: 'LinkedIn Post',
-													value: 'LinkedIn Post',
-												}}
-											/>
+													}}
+												/>
+											</div>
 										</div>
 									)}
 
