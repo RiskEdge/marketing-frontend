@@ -267,6 +267,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													</div>
 												) : null}
 											</div>
+<<<<<<< HEAD
 											<div className='flex flex-col gap-3 my-4'>
 												<label
 													htmlFor='creativity'
@@ -375,6 +376,66 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													]}
 													multi={false}
 													defaultValue={{
+=======
+										<div className="flex flex-col gap-3 my-4">
+											<label htmlFor="creativity">Creativity</label>
+											
+											<div className="range-container">
+												<span className="emoji" id="min-emoji">😞</span> 
+												
+												<input 
+												className="range-slider" 
+												id="creativity"
+												name="creativity"
+												type="range"
+												min="0"
+												max="100"
+												onChange={formik.handleChange}
+												onBlur={formik.handleBlur}
+												value={formik.values.creativity}
+												/>
+												
+												<span className="emoji" id="max-emoji">😁</span> 
+											</div>
+
+											{formik.touched.creativity && formik.errors.creativity ? (
+												<div className="text-red-500 text-xs">
+												{formik.errors.creativity}
+												</div>
+											) : null}
+											</div>
+
+											<SelectCustom
+												name={'tags'}
+												tags={tags}
+												setTags={setTags}
+												options={[
+													{ label: 'Funny', value: 'Funny' },
+													{ label: 'Relatable', value: 'Relatable' },
+													{ label: 'Descriptive', value: 'Descriptive' },
+													{ label: 'Engaging', value: 'Engaging' },
+													{
+														label: 'Controversial',
+														value: 'Controversial',
+													},
+													{ label: 'Poetic', value: 'Poetic' },
+													{ label: 'Relevant', value: 'Relevant' },
+												]}
+												multi={true}
+												defaultValue={{ label: 'Funny', value: 'Funny' }}
+											/>
+											<SelectCustom
+												name={'content_type'}
+												tags={contentType}
+												setTags={setContentType}
+												options={[
+													{ label: 'Blog Post', value: 'Blog Post' },
+													{
+														label: 'Instagram Post',
+														value: 'Instagram Post',
+													},
+													{
+>>>>>>> aee1473c3bd18598369ccd0087742fff663be2ad
 														label: 'LinkedIn Post',
 														value: 'LinkedIn Post',
 													}}
