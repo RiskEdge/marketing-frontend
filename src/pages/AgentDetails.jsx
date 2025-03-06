@@ -25,6 +25,10 @@ const AgentDetails = () => {
 		competitors_context: '',
 		content_type: '',
 		additional_info: '',
+		topic: '',
+		creativity: '',
+		tags: '',
+		llm: '',
 	});
 
 	useEffect(() => {
@@ -32,11 +36,15 @@ const AgentDetails = () => {
 			company_name: localStorage.getItem('company_name') || '',
 			company_website: localStorage.getItem('company_website') || '',
 			industry: localStorage.getItem('industry') || '',
-			agent: localStorage.getItem('agent') || '',
+			// agent: localStorage.getItem('agent') || '',
+			topic: localStorage.getItem('topic') || '',
+			creativity: localStorage.getItem('creativity') || 0.5,
 			services: localStorage.getItem('services') || '',
 			competitors_context: localStorage.getItem('competitors_context') || '',
 			content_type: localStorage.getItem('content_type') || '',
 			additional_info: localStorage.getItem('additional_info') || '',
+			tags: JSON.parse(localStorage.getItem('tags') || '[]'), // ✅ Ensure array
+			llm: localStorage.getItem('llm') || 'ChatGPT',
 		};
 		setFormData(storedData); // Update the state with the data from localStorage
 	}, []);
@@ -48,24 +56,24 @@ const AgentDetails = () => {
 				formData,
 				{
 					headers: {
-						'Content-Type': 'application/json',
+						'Content-Type': 'multipart/form-data',
 					},
 				}
 			);
-			if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
-				const storedAgentAndTaskData = {
-					agents: JSON.parse(localStorage.getItem('agents')) || {},
-					tasks: JSON.parse(localStorage.getItem('tasks')) || {},
-				};
-				setIsLoading(false);
-				// setResponse(storedAgentAndTaskData);
-				setAgents(storedAgentAndTaskData.agents);
-				setTasks(storedAgentAndTaskData.tasks);
-			} else {
-				setResponse(res.data);
-				setAgents(res.data?.agents);
-				setTasks(res.data?.tasks);
-			}
+			// if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
+			// 	const storedAgentAndTaskData = {
+			// 		agents: JSON.parse(localStorage.getItem('agents')) || {},
+			// 		tasks: JSON.parse(localStorage.getItem('tasks')) || {},
+			// 	};
+			// 	setIsLoading(false);
+			// 	// setResponse(storedAgentAndTaskData);
+			// 	setAgents(storedAgentAndTaskData.agents);
+			// 	setTasks(storedAgentAndTaskData.tasks);
+			// } else {
+			setResponse(res.data);
+			setAgents(res.data?.agents);
+			setTasks(res.data?.tasks);
+			// }
 		} catch (error) {
 			console.log(error);
 		} finally {

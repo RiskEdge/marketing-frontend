@@ -10,6 +10,9 @@ import { useLocation } from 'react-router-dom';
 import { TbSelector } from 'react-icons/tb';
 import SelectCustom from './SelectCustom';
 
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+
 import geminiImage from '../assets/images/gemini-52a295c6.svg';
 import chatgptImage from '../assets/images/chatgpt-b64ae886.svg';
 
@@ -274,15 +277,29 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													Creativity
 												</label>
 
-												<div className='range-container flex flex-col'>
-													<div className='flex justify-between text-sm'>
-														<span className='emoji' id='min-emoji'>
-															0 (Not Creative)
-														</span>
-														<span className='emoji' id='max-emoji'>
-															1 (Creative)
-														</span>
-													</div>
+												<div className='range-container flex flex-row'>
+													{/* <div className='flex justify-between space-x-11 text-sm'>
+														</div> */}
+													<Slider
+														aria-label='Always visible'
+														defaultValue={0.5}
+														step={0.1}
+														min={0}
+														max={1}
+														onChange={(e) => {
+															formik.setFieldValue(
+																'creativity',
+																e.target.value
+															);
+															setCreativity(e.target.value);
+														}}
+														onBlur={formik.handleBlur}
+														value={formik.values.creativity}
+														valueLabelDisplay='on'
+													/>
+													{/* <span className='emoji text-sm' id='min-emoji'>
+														0 (Not Creative)
+													</span>
 
 													<input
 														className='range-slider w-full'
@@ -303,6 +320,9 @@ const ContextForm = ({ service = '', agent = '' }) => {
 														onBlur={formik.handleBlur}
 														value={formik.values.creativity}
 													/>
+													<span className='emoji text-sm' id='max-emoji'>
+														1 (Creative)
+													</span> */}
 												</div>
 
 												{formik.touched.creativity &&
