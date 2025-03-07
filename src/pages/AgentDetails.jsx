@@ -33,16 +33,17 @@ const AgentDetails = () => {
 
 	useEffect(() => {
 		const storedData = {
-			company_name: localStorage.getItem('company_name') || '',
-			company_website: localStorage.getItem('company_website') || '',
-			industry: localStorage.getItem('industry') || '',
+			company_name: localStorage.getItem('company_name') || 'COMPANY NAME',
+			company_website: localStorage.getItem('company_website') || 'COMPANY WEBSITE',
+			industry: localStorage.getItem('industry') || 'INDUSTRY',
 			// agent: localStorage.getItem('agent') || '',
-			topic: localStorage.getItem('topic') || '',
+			topic: localStorage.getItem('topic') || 'TOPIC',
 			creativity: localStorage.getItem('creativity') || 0.5,
-			services: localStorage.getItem('services') || '',
-			competitors_context: localStorage.getItem('competitors_context') || '',
-			content_type: localStorage.getItem('content_type') || '',
-			additional_info: localStorage.getItem('additional_info') || '',
+			services: localStorage.getItem('services') || 'SERVICES',
+			competitors_context:
+				localStorage.getItem('competitors_context') || 'COMPETITORS CONTEXT',
+			content_type: localStorage.getItem('content_type') || 'CONTENT TYPE',
+			additional_info: localStorage.getItem('additional_info') || 'ADDITIONAL INFO',
 			tags: JSON.parse(localStorage.getItem('tags') || '[]'), // ✅ Ensure array
 			llm: localStorage.getItem('llm') || 'ChatGPT',
 		};
@@ -121,7 +122,7 @@ const AgentDetails = () => {
 
 	return (
 		<Layout>
-			<div className='w-full h-full bg-gray-100'>
+			<div className='w-full min-h-screen bg-gray-100'>
 				<div className='lg:mx-auto  lg:w-4/5 py-12 px-4 '>
 					<h1 className='text-4xl md:text-5xl justify-center mb-12 text-blue-600 font-bold flex items-center gap-2'>
 						Agents <GrUserManager />
@@ -148,7 +149,7 @@ const AgentDetails = () => {
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-min'>
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 '>
 							{tasks &&
 								Object.keys(tasks).map((key) => (
 									<TaskDetail

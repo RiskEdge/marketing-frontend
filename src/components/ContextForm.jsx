@@ -151,8 +151,9 @@ const ContextForm = ({ service = '', agent = '' }) => {
 				<Loading />
 			) : (
 				<>
-					<div className='w-full h-full formBg relative'>
-						<div className='absolute w-full h-full bg-black opacity-50'></div>
+					<div className='w-full min-h-screen formBg relative overflow-auto'>
+						<div className='absolute w-full h-full bg-black/50 bg-fixed backdrop-blur-sm'></div>
+						{/* <div className='absolute p-0 w-full h-full bg-black opacity-50'></div> */}
 						<div className='py-20 px-6 z-10 flex w-full justify-center items-center'>
 							<div className='max-w-xl w-full mx-auto z-10  bg-white py-8 p-3 shadow-xl rounded'>
 								<h2 className='text-3xl font-bold mb-4 text-center'>Client Info</h2>
@@ -346,18 +347,27 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													setTags={setTags}
 													options={[
 														{ label: 'Funny', value: 'Funny' },
-														{ label: 'Relatable', value: 'Relatable' },
+														{
+															label: 'Relatable',
+															value: 'Relatable',
+														},
 														{
 															label: 'Descriptive',
 															value: 'Descriptive',
 														},
-														{ label: 'Engaging', value: 'Engaging' },
+														{
+															label: 'Engaging',
+															value: 'Engaging',
+														},
 														{
 															label: 'Controversial',
 															value: 'Controversial',
 														},
 														{ label: 'Poetic', value: 'Poetic' },
-														{ label: 'Relevant', value: 'Relevant' },
+														{
+															label: 'Relevant',
+															value: 'Relevant',
+														},
 													]}
 													multi={true}
 													defaultValue={{
@@ -379,7 +389,10 @@ const ContextForm = ({ service = '', agent = '' }) => {
 													tags={contentType}
 													setTags={setContentType}
 													options={[
-														{ label: 'Blog Post', value: 'Blog Post' },
+														{
+															label: 'Blog Post',
+															value: 'Blog Post',
+														},
 														{
 															label: 'Instagram Post',
 															value: 'Instagram Post',
@@ -507,6 +520,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 								</form>
 							</div>
 						</div>
+						{/* </div> */}
 					</div>
 				</>
 			)}
