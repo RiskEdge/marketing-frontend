@@ -80,12 +80,6 @@ const AgentDetail = ({ agent, agentKey, onSave, onReset }) => {
 			<div className='mb-2'>
 				<h3 className='font-semibold my-2'>Backstory</h3>
 				{editMode ? (
-					// <textarea
-
-					// 	className="w-full min-h-[150px] slim-scrollbar p-2 border border-gray-300 rounded-md resize-y overflow-auto focus:outline-none text-sm leading-7"
-					// 	value={editedAgent.backstory}
-					// 	onChange={(e) => handleEditChange('backstory', e.target.value)}
-					// />
 					<textarea
 						className='block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50  border-0 border-b-2 border-gray-300 appearance-none  focus:ring-0 focus:border-blue-600 peer min-h-[180px] slim-scrollbar p-2 leading-7  rounded-md resize-y overflow-auto focus:outline-none'
 						value={editedAgent.backstory}

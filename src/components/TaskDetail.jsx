@@ -9,7 +9,9 @@ import { GrPowerReset } from 'react-icons/gr';
 const TaskDetail = ({ task, taskKey, onSave, onReset }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [editedTask, setEditedTask] = useState({
+		task_name: task.task_name,
 		description: task.description,
+		agentName: task.agentName,
 	});
 
 	const handleEditChange = (field, value) => {
@@ -32,7 +34,7 @@ const TaskDetail = ({ task, taskKey, onSave, onReset }) => {
 	return (
 		<div className='border overflow-y-auto thin-scrollbar bg-gray-50 shadow border-gray-300 px-4 md:px-6 py-3 md:py-6'>
 			<div className='flex gap-6'>
-				<h2 className='font-bold text-xl text-pink-500 mb-2'>{task.agentName}</h2>
+				<h2 className='font-bold text-xl text-pink-500 mb-2'>{task.task_name}</h2>
 
 				<div className='flex justify-between'>
 					<button

@@ -68,11 +68,6 @@ const ContextForm = ({ service = '', agent = '' }) => {
 
 	const submitFormData = async (formData) => {
 		try {
-			// const agentInfo = JSON.parse(localStorage.getItem('agents'));
-
-			// if (agentInfo) {
-			// 	console.log('Agent info:', agentInfo);
-			// }
 			console.log(curPath);
 
 			const response = await axios.post(
