@@ -54,34 +54,34 @@ const AgentDetails = () => {
 
 	const getAgentsInfo = async () => {
 		try {
-			if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
-				const storedAgentAndTaskData = {
-					agents: JSON.parse(localStorage.getItem('agents')),
-					tasks: JSON.parse(localStorage.getItem('tasks')),
-				};
-				setResponse(storedAgentAndTaskData);
-				setAgents(storedAgentAndTaskData.agents);
-				setTasks(storedAgentAndTaskData.tasks);
-				setIsLoading(false);
-				// res?.data ? setIsLoading(false) : null;
-			} else {
-				const res = await axios.post(
-					`${import.meta.env.VITE_SERVER_URL}agents-info`,
-					formData,
-					{
-						headers: {
-							'Content-Type': 'multipart/form-data',
-						},
-					}
-				);
-				console.log(res.data);
-				setResponse(res.data);
-				setAgents(res.data?.agents);
-				setTasks(res.data?.tasks);
-				// res?.data ? setIsLoading(false) : null;
-				localStorage.setItem('agents', JSON.stringify(res.data?.agents));
-				localStorage.setItem('tasks', JSON.stringify(res.data?.tasks));
-			}
+			// if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
+			// 	const storedAgentAndTaskData = {
+			// 		agents: JSON.parse(localStorage.getItem('agents')),
+			// 		tasks: JSON.parse(localStorage.getItem('tasks')),
+			// 	};
+			// 	setResponse(storedAgentAndTaskData);
+			// 	setAgents(storedAgentAndTaskData.agents);
+			// 	setTasks(storedAgentAndTaskData.tasks);
+			// 	setIsLoading(false);
+			// 	// res?.data ? setIsLoading(false) : null;
+			// } else {
+			const res = await axios.get(
+				`${import.meta.env.VITE_SERVER_URL}agents-info`
+				// formData,
+				// {
+				// 	headers: {
+				// 		'Content-Type': 'multipart/form-data',
+				// 	},
+				// }
+			);
+			// console.log(res.data);
+			setResponse(res.data);
+			setAgents(res.data?.agents);
+			setTasks(res.data?.tasks);
+			// res?.data ? setIsLoading(false) : null;
+			localStorage.setItem('agents', JSON.stringify(res.data?.agents));
+			localStorage.setItem('tasks', JSON.stringify(res.data?.tasks));
+			// }
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -147,10 +147,10 @@ const AgentDetails = () => {
 		setTasks(updatedTasks);
 		localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 
-		console.log('All Tasks: ', tasks);
-		console.log('All Updated Tasks: ', updatedTasks);
+		// console.log('All Tasks: ', tasks);
+		// console.log('All Updated Tasks: ', updatedTasks);
 
-		console.log('Updated Task: ', updatedTask);
+		// console.log('Updated Task: ', updatedTask);
 
 		const data = {
 			task_name: updatedTask[key].task_name,
@@ -185,7 +185,7 @@ const AgentDetails = () => {
 				},
 			}
 		);
-		console.log(res);
+
 		getToast(res?.data.status, res?.data.message);
 	};
 
@@ -208,7 +208,23 @@ const AgentDetails = () => {
 				},
 			}
 		);
+		// console.log(res);
+
 		console.log(res);
+		if (res?.status == 200) {
+			const data = res?.data?.response?.data[0];
+			console.log(data);
+			const reset_task = {
+				task_name: data.task_name,
+				agentName: data.agent_name,
+				description: data.edited_description,
+			};
+
+			const updatedTasks = { ...tasks };
+			updatedTasks[key] = { ...updatedTasks[key], ...reset_task };
+			setTasks(updatedTasks);
+			localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+		}
 		getToast(res?.data.status, res?.data.message);
 	};
 
