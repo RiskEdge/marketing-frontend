@@ -36,7 +36,7 @@ const validationSchema = Yup.object({
 	llm: Yup.string().required('LLM is required'),
 });
 
-const ContextForm = ({ service = '', agent = '' }) => {
+const ContextForm = ({ service = '' }) => {
 	const [output, setOutput] = useState({});
 	const [haveResponse, setHaveResponse] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +69,7 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	const submitFormData = async (formData) => {
 		try {
 			console.log(curPath);
+			console.log('Form Data: ', formData);
 
 			const response = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}${curPath}`,
@@ -88,44 +89,56 @@ const ContextForm = ({ service = '', agent = '' }) => {
 				'Error submitting the form:',
 				error.response ? error.response.data : error.message
 			);
-			throw error; // Re-throw the error for further handling if needed
+			console.error('Error submitting the form:', error.message);
+			alert('An error occurred while submitting the form.');
+			setIsLoading(false);
+
+			// throw error; // Re-throw the error for further handling if needed
 		}
 	};
 
+	let parsedItems = {};
+	const items = localStorage.getItem('formikData');
+	if (items) {
+		parsedItems = JSON.parse(items);
+	}
+
 	const formik = useFormik({
 		initialValues: {
-			company_name: localStorage.getItem('company_name') || '',
-			company_website: localStorage.getItem('company_website') || '',
-			industry: localStorage.getItem('industry') || '',
+			company_name: parsedItems.company_name || '',
+			company_website: parsedItems.company_website || '',
+			industry: parsedItems.industry || '',
 			// agent: agent || localStorage.getItem('agent') || '',
-			services: localStorage.getItem('services') || '',
-			topic: localStorage.getItem('topic') || '',
-			creativity: localStorage.getItem('creativity') || 0.5,
-			competitors_context: localStorage.getItem('competitors_context') || '',
-			content_type: localStorage.getItem('content_type') || 'LinkedIn Post',
-			additional_info: localStorage.getItem('additional_info') || '',
-			tags: JSON.parse(localStorage.getItem('tags') || '[]'), // ✅ Ensure array
-			llm: localStorage.getItem('llm') || 'ChatGPT',
+			services: parsedItems.services || '',
+			topic: parsedItems.topic || '',
+			creativity: parsedItems.creativity || 0.5,
+			competitors_context: parsedItems.competitors_context || '',
+			content_type: parsedItems.content_type || 'LinkedIn Post',
+			additional_info: parsedItems.additional_info || '',
+			tags: parsedItems.tags || [], // ✅ Ensure array
+			llm: parsedItems.llm || 'ChatGPT',
 		},
 		validationSchema,
 		onSubmit: async (values) => {
+			console.log('Submitting form..');
 			try {
 				if (curPath === 'content-writer') {
 					if (!values.topic.trim()) {
 						formik.setErrors({ topic: 'Topic is required' }); // ✅ Manually set error
 						return;
 					}
+					formik.values.tags = JSON.stringify(tags);
+					formik.values.creativity = creativity;
+					formik.values.content_type = contentType;
 				}
 				setIsLoading(true);
-				formik.values.tags = JSON.stringify(tags);
-				formik.values.creativity = creativity;
-				formik.values.content_type = contentType;
 				formik.values.llm = selectedOption;
 				setFormData(values);
 				submitFormData(values);
 				console.log(values);
-				formik.resetForm();
+				// formik.resetForm();
 			} catch (error) {
+				setIsLoading(false);
 				alert('Failed to submit the form!');
 			}
 		},
@@ -138,7 +151,41 @@ const ContextForm = ({ service = '', agent = '' }) => {
 	}, [formik.values]);
 
 	if (haveResponse) {
-		return output && <AgentResponse response={output} service={service} formdata={formData} />;
+		let data = {};
+
+		const commonFields = [
+			'company_name',
+			'company_website',
+			'industry',
+			'services',
+			'additional_info',
+			'llm',
+		];
+
+		const fieldMapping = {
+			'marketing-analyst': ['competitors_context'],
+			'content-writer': ['content_type', 'topic', 'creativity', 'tags'],
+			'seo-specialist': [],
+		};
+
+		const filterFormData = (route, formData) => {
+			const allowedFields = new Set([
+				...commonFields, // Always include common fields
+				...(fieldMapping[route] || []), // Add route-specific fields
+			]);
+			return Object.fromEntries(
+				Object.entries(formData).filter(([key]) => allowedFields.has(key))
+			);
+		};
+
+		if (curPath === 'marketing-analyst') {
+			data = filterFormData('marketing-analyst', formData);
+		} else if (curPath === 'seo-specialist') {
+			data = filterFormData('seo-specialist', formData);
+		} else {
+			data = filterFormData('content-writer', formData);
+		}
+		return output && <AgentResponse response={output} service={service} formdata={data} />;
 	}
 	return (
 		<Layout>
@@ -148,10 +195,11 @@ const ContextForm = ({ service = '', agent = '' }) => {
 				<>
 					<div className='w-full min-h-screen formBg relative overflow-auto'>
 						<div className='absolute w-full h-full bg-black/50 bg-fixed backdrop-blur-sm'></div>
-						{/* <div className='absolute p-0 w-full h-full bg-black opacity-50'></div> */}
 						<div className='py-20 px-6 z-10 flex w-full justify-center items-center'>
 							<div className='max-w-xl w-full mx-auto z-10  bg-white py-8 p-3 shadow-xl rounded'>
-								<h2 className='text-3xl font-bold mb-4 text-center'>Client Info</h2>
+								<h2 className='text-3xl font-bold mb-4 text-center'>
+									Let's Personalize Your Experience
+								</h2>
 								<form
 									onSubmit={formik.handleSubmit}
 									className='space-y-8 md:px-8 px-4 py-3'>
