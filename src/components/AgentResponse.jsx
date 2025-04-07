@@ -7,7 +7,7 @@ import marketingResponse from '../assets/marketing_analysis/response5.json';
 import { BsClipboardCheck } from 'react-icons/bs';
 import ContextForm from './ContextForm';
 
-const AgentResponse = ({ response, service, formdata }) => {
+const AgentResponse = ({ response, outputHeading, service, formdata }) => {
 	const textRef = useRef();
 
 	const [copyText, setCopyText] = useState(false);
@@ -43,7 +43,7 @@ const AgentResponse = ({ response, service, formdata }) => {
 						className='max-w-2xl  h-screen overflow-y-scroll  thin-scrollbar shadow-xl w-full border lg:4/5 md:4/5 px-10 py-6 bg-white '
 						key={output.agent + 'output'}>
 						<h2 className='font-bold text-pink-500 text-center my-6 lg:text-3xl  md:text-5xl text-3xl'>
-							Output
+							{outputHeading}
 						</h2>
 
 						<div className='w-full mx-auto flex flex-col relative justify-center items-start'>

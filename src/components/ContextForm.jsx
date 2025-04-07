@@ -13,6 +13,8 @@ import SelectCustom from './SelectCustom';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
+import { marketingAgentStages, contentWriterAgentStages, seoAgentStages } from '../assets/stages';
+
 import geminiImage from '../assets/images/gemini-52a295c6.svg';
 import chatgptImage from '../assets/images/chatgpt-b64ae886.svg';
 
@@ -152,6 +154,7 @@ const ContextForm = ({ service = '' }) => {
 
 	if (haveResponse) {
 		let data = {};
+		let outputHeading = '';
 
 		const commonFields = [
 			'company_name',
@@ -180,17 +183,41 @@ const ContextForm = ({ service = '' }) => {
 
 		if (curPath === 'marketing-analyst') {
 			data = filterFormData('marketing-analyst', formData);
+			outputHeading = 'Your Marketing Analysis Report';
 		} else if (curPath === 'seo-specialist') {
 			data = filterFormData('seo-specialist', formData);
+			outputHeading = 'Your Website SEO Audit Report';
 		} else {
 			data = filterFormData('content-writer', formData);
+			outputHeading = 'Your Content';
 		}
-		return output && <AgentResponse response={output} service={service} formdata={data} />;
+		return (
+			output && (
+				<AgentResponse
+					response={output}
+					outputHeading={outputHeading}
+					service={service}
+					formdata={data}
+				/>
+			)
+		);
 	}
+
+	let loadingStages = {};
+
+	if (curPath === 'content-writer') {
+		loadingStages = contentWriterAgentStages;
+	} else if (curPath === 'marketing-analyst') {
+		loadingStages = marketingAgentStages;
+	}
+	if (curPath === 'seo-specialist') {
+		loadingStages = seoAgentStages;
+	}
+
 	return (
 		<Layout>
 			{isLoading ? (
-				<Loading />
+				<Loading stages={loadingStages} />
 			) : (
 				<>
 					<div className='w-full min-h-screen formBg relative overflow-auto'>

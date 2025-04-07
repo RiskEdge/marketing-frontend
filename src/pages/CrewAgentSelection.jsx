@@ -36,7 +36,7 @@ const CrewAgentSelection = () => {
 						href='/crew/seo-specialist'
 						className='max-w-sm rounded-lg relative bg-white hover:scale-105 transition transform duration-300 shadow-lg border cursor-pointer border-gray-400/50'>
 						<div className='absolute w-full h-full bg-black rounded-lg opacity-0 hover:opacity-80 transition duration-300 flex items-center justify-center'>
-							<h3 className='text-2xl font-bold text-white'>SEO Analysis</h3>
+							<h3 className='text-2xl font-bold text-white'>Website SEO Audit</h3>
 						</div>
 						<img className=' md:h-[220px] rounded-lg' src={seoAnalysis} alt='' />
 					</a>
