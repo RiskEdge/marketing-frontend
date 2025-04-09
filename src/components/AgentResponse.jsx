@@ -3,22 +3,31 @@ import MarkdownDisplay from './MarkdownDisplay';
 import { IoMdCopy } from 'react-icons/io';
 import copy from 'copy-to-clipboard';
 import Layout from './Layout';
-import marketingResponse from '../assets/marketing_analysis/response5.json';
+// import marketingResponse from '../assets/marketing_analysis/response5.json';
 import { BsClipboardCheck } from 'react-icons/bs';
 import ContextForm from './ContextForm';
 
 const AgentResponse = ({ response, outputHeading, service, formdata }) => {
 	const textRef = useRef();
 
+	console.log('response: ', response);
+
 	const [copyText, setCopyText] = useState(false);
 
-	const marketingOutput = {
-		output: marketingResponse.result.tasks_output[0],
-		token_usage: marketingResponse.result.token_usage,
-	};
+	// const marketingOutput = {
+	// 	output: marketingResponse.result.tasks_output[0],
+	// 	token_usage: marketingResponse.result.token_usage,
+	// };
 	// const output = response.result.tasks_output[0];
-	const output = response ? response?.result?.tasks_output[0] : marketingOutput.output;
-	const token_usage = response ? response?.result?.token_usage : marketingOutput.token_usage;
+	const output = response ? response?.result?.tasks_output[0] : { raw: response?.message };
+	const token_usage = response
+		? response?.result?.token_usage
+		: {
+				total_tokens: 0,
+				prompt_tokens: 0,
+				completion_tokens: 0,
+				successful_requests: 0,
+		  };
 	const copyToClipboard = () => {
 		const copyText = textRef.current.value;
 		const isCopied = copy(copyText);
@@ -125,31 +134,8 @@ const AgentResponse = ({ response, outputHeading, service, formdata }) => {
 							</div>
 						</div>
 					</div>
-
-					{/* <div className=' p-4 flex-col flex justify-center items-center'>
-						<h2 className='font-semibold text-center text-2xl mb-4 text-pink-500'>
-							Your Prompt
-						</h2>
-
-						<div className='w-full flex flex-col gap-6 p-3'>
-							{formdata &&
-								Object.keys(formdata).map((key) => {
-									return (
-										<div className='flex flex-col gap-2 ' key={key}>
-											<h4 className='text-sm font-semibold uppercase text-gray-800'>
-												{key}:
-											</h4>
-											<p className='border-b text-xs md:text-base border-blue-400/80 rounded-lg p-2 w-full bg-gray-100'>
-												{formdata[key]}
-											</p>
-										</div>
-									);
-								})}
-						</div>
-					</div> */}
 				</div>
 			</div>
-			{/* </div> */}
 		</Layout>
 	);
 };

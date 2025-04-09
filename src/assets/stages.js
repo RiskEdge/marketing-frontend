@@ -8,17 +8,17 @@ import marketGaps from './gifs/marketing analysis/analyzing_market_gaps.gif';
 import finalizingReport from './gifs/marketing analysis/finalizing_report.gif';
 
 const marketingAgentStages = [
-	{ stage: 'Analyzing Market Trends...', image: marketTrends, duration: 6000 },
-	{ stage: 'Identifying Target Audience...', image: targetAudience, duration: 8000 },
-	{ stage: 'Analyzing Competitors...', image: analyzingCompetitors, duration: 7000 },
+	{ stage: 'Analyzing Market Trends...', image: marketTrends, duration: 10000 },
+	{ stage: 'Identifying Target Audience...', image: targetAudience, duration: 11000 },
+	{ stage: 'Analyzing Competitors...', image: analyzingCompetitors, duration: 9000 },
 	{
 		stage: 'Evaluating Competitor Strategies on Social Media Platforms...',
 		image: socialMediaStrategies,
 		duration: 8000,
 	},
-	{ stage: 'Identifying Market Gaps...', image: marketGaps, duration: 5000 },
-	{ stage: 'Generating Marketing Strategies...', image: marketTrends, duration: 6000 },
-	{ stage: 'Finalizing Report', image: finalizingReport, duration: 9000 },
+	{ stage: 'Identifying Market Gaps...', image: marketGaps, duration: 10000 },
+	{ stage: 'Generating Marketing Strategies...', image: marketTrends, duration: 10000 },
+	{ stage: 'Finalizing Report', image: finalizingReport, duration: 13000 },
 ];
 
 const contentWriterAgentStages = [
@@ -32,10 +32,10 @@ const contentWriterAgentStages = [
 
 const seoAgentStages = [
 	{ stage: 'Visiting the website...', image: analyzingCompetitors, duration: 9000 },
-	{ stage: 'Analyzing Performance...', image: marketTrends, duration: 7000 },
+	{ stage: 'Analyzing Performance...', image: marketTrends, duration: 10000 },
 	{ stage: 'Analyzing SEO...', image: marketGaps, duration: 8000 },
-	{ stage: 'Finding Errors/Issues...', image: socialMediaStrategies, duration: 6000 },
-	{ stage: 'Final SEO Review...', image: finalizingReport, duration: 9000 },
+	{ stage: 'Finding Errors/Issues...', image: socialMediaStrategies, duration: 9000 },
+	{ stage: 'Final SEO Review...', image: finalizingReport, duration: 11000 },
 ];
 
 export { marketingAgentStages, contentWriterAgentStages, seoAgentStages };

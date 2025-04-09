@@ -4,7 +4,8 @@ import { useAuth } from '../auth/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineLogout } from 'react-icons/ai';
 
-const Layout = ({ children, title, description, keywords, author }) => {
+const Layout = ({ children, ...props }) => {
+	const { title, description, author, keywords } = props;
 	const [isAuthenticated, setIsAuthenticated] = useAuth();
 	const navigate = useNavigate();
 

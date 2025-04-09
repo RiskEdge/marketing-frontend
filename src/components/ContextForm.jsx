@@ -32,7 +32,7 @@ const validationSchema = Yup.object({
 	competitors_context: Yup.string(),
 	content_type: Yup.string(),
 	additional_info: Yup.string(),
-	tags: Yup.array(),
+	// tags: Yup.array(),
 	// .min(1, 'Select at least one tag') // Minimum 1 selection required
 	// .required('Tags are required'),
 	llm: Yup.string().required('LLM is required'),
@@ -99,6 +99,30 @@ const ContextForm = ({ service = '' }) => {
 		}
 	};
 
+	const handleSubmit = () => {
+		console.log('Submitting form..');
+		try {
+			if (curPath === 'content-writer') {
+				if (!formik.values.topic.trim()) {
+					formik.setErrors({ topic: 'Topic is required' }); // ✅ Manually set error
+					return;
+				}
+				formik.values.tags = JSON.stringify(tags);
+				formik.values.creativity = creativity;
+				formik.values.content_type = contentType;
+			}
+			setIsLoading(true);
+			formik.values.llm = selectedOption;
+			setFormData(formik.values);
+			submitFormData(formik.values);
+			console.log(formik.values);
+			// formik.resetForm();
+		} catch (error) {
+			setIsLoading(false);
+			alert('Failed to submit the form!');
+		}
+	};
+
 	let parsedItems = {};
 	const items = localStorage.getItem('formikData');
 	if (items) {
@@ -120,8 +144,8 @@ const ContextForm = ({ service = '' }) => {
 			tags: parsedItems.tags || [], // ✅ Ensure array
 			llm: parsedItems.llm || 'ChatGPT',
 		},
-		validationSchema,
-		onSubmit: async (values) => {
+		validationSchema: validationSchema,
+		onSubmit: (values) => {
 			console.log('Submitting form..');
 			try {
 				if (curPath === 'content-writer') {
@@ -214,6 +238,11 @@ const ContextForm = ({ service = '' }) => {
 		loadingStages = seoAgentStages;
 	}
 
+	const abc = (e) => {
+		e.preventDefault();
+		console.log('Submitted');
+	};
+
 	return (
 		<Layout>
 			{isLoading ? (
@@ -229,7 +258,8 @@ const ContextForm = ({ service = '' }) => {
 								</h2>
 								<form
 									onSubmit={formik.handleSubmit}
-									className='space-y-8 md:px-8 px-4 py-3'>
+									className='space-y-8 md:px-8 px-4 py-3'
+									method='POST'>
 									<div className='flex gap-5 w-full flex-col sm:flex-row'>
 										{/* Company Name */}
 										<div className='flex flex-col gap-3 w-full'>
@@ -554,6 +584,7 @@ const ContextForm = ({ service = '' }) => {
 														</h3>
 
 														<button
+															type='button'
 															onClick={() =>
 																handleSelectOption('ChatGPT')
 															}
@@ -566,6 +597,7 @@ const ContextForm = ({ service = '' }) => {
 															ChatGPT
 														</button>
 														<button
+															type='button'
 															onClick={() =>
 																handleSelectOption('Gemini')
 															}
@@ -578,6 +610,7 @@ const ContextForm = ({ service = '' }) => {
 															{/* Gemini */}
 														</button>
 														<button
+															type='button'
 															onClick={handleCloseModal}
 															className='mt-4 w-full text-center py-2 bg-gray-300 rounded-md'>
 															Close
