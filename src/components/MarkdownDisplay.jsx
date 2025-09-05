@@ -78,11 +78,6 @@ const MarkdownDisplay = ({ markdownText }) => {
 			.trim();
 	};
 
-	// const cleanedMarkdownText = markdownText
-	// 	.trim()
-	// 	.replace(/\n+$/, '') // Remove trailing newlines
-	// 	.replace(/(```\s*```|^\s*-\s*$|<p>\s*<\/p>)/gm, '');
-
 	return (
 		<Markdown
 			className='prose text-black flex-wrap text-sm leading-6 flex flex-col max-h-500px'

@@ -37,7 +37,7 @@ const TaskDetail = ({ task, taskKey, onSave, onReset }) => {
 				<h2 className='font-bold text-xl text-pink-500 mb-2'>{task.task_name}</h2>
 
 				<div className='flex justify-between'>
-					<button
+					{/* <button
 						onClick={() => setEditMode((prev) => !prev)}
 						className='rounded-md text-pink-500'>
 						{editMode ? (
@@ -49,7 +49,7 @@ const TaskDetail = ({ task, taskKey, onSave, onReset }) => {
 								<CiEdit className='text-2xl' /> Edit
 							</span>
 						)}
-					</button>
+					</button> */}
 					{editMode && (
 						<>
 							<button

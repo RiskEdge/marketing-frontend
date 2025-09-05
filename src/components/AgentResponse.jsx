@@ -3,22 +3,14 @@ import MarkdownDisplay from './MarkdownDisplay';
 import { IoMdCopy } from 'react-icons/io';
 import copy from 'copy-to-clipboard';
 import Layout from './Layout';
-// import marketingResponse from '../assets/marketing_analysis/response5.json';
 import { BsClipboardCheck } from 'react-icons/bs';
 import ContextForm from './ContextForm';
 
 const AgentResponse = ({ response, outputHeading, service, formdata }) => {
 	const textRef = useRef();
 
-	console.log('response: ', response);
-
 	const [copyText, setCopyText] = useState(false);
 
-	// const marketingOutput = {
-	// 	output: marketingResponse.result.tasks_output[0],
-	// 	token_usage: marketingResponse.result.token_usage,
-	// };
-	// const output = response.result.tasks_output[0];
 	const output = response ? response?.result?.tasks_output[0] : { raw: response?.message };
 	const token_usage = response
 		? response?.result?.token_usage

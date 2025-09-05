@@ -70,8 +70,8 @@ const ContextForm = ({ service = '' }) => {
 
 	const submitFormData = async (formData) => {
 		try {
-			console.log(curPath);
-			console.log('Form Data: ', formData);
+			// console.log(curPath);
+			// console.log('Form Data: ', formData);
 
 			const response = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}${curPath}`,

@@ -34,7 +34,7 @@ const AgentDetail = ({ agent, agentKey, onSave, onReset }) => {
 			<div className='flex gap-6'>
 				<h2 className='font-bold text-xl text-pink-500 mb-2'>{agent.role}</h2>
 				<div className='flex justify-between'>
-					<button
+					{/* <button
 						onClick={() => setEditMode((prev) => !prev)}
 						className=' rounded-md text-pink-500'>
 						{editMode ? (
@@ -46,7 +46,7 @@ const AgentDetail = ({ agent, agentKey, onSave, onReset }) => {
 								<CiEdit className='text-2xl' /> Edit
 							</span>
 						)}
-					</button>
+					</button> */}
 					{editMode && (
 						<>
 							<button

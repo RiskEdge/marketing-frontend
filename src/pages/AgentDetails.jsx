@@ -34,51 +34,29 @@ const AgentDetails = () => {
 	});
 
 	useEffect(() => {
-		const storedData = {
-			company_name: localStorage.getItem('company_name') || 'COMPANY NAME',
-			company_website: localStorage.getItem('company_website') || 'COMPANY WEBSITE',
-			industry: localStorage.getItem('industry') || 'INDUSTRY',
-			// agent: localStorage.getItem('agent') || '',
-			topic: localStorage.getItem('topic') || 'TOPIC',
-			creativity: localStorage.getItem('creativity') || 0.5,
-			services: localStorage.getItem('services') || 'SERVICES',
-			competitors_context:
-				localStorage.getItem('competitors_context') || 'COMPETITORS CONTEXT',
-			content_type: localStorage.getItem('content_type') || 'CONTENT TYPE',
-			additional_info: localStorage.getItem('additional_info') || 'ADDITIONAL INFO',
-			tags: JSON.parse(localStorage.getItem('tags') || '[]'), // ✅ Ensure array
-			llm: localStorage.getItem('llm') || 'ChatGPT',
-		};
-		setFormData(storedData); // Update the state with the data from localStorage
+		let parsedItems = {};
+		const items = localStorage.getItem('formikData');
+		if (items) {
+			parsedItems = JSON.parse(items);
+		}
+		setFormData(parsedItems);
 	}, []);
 
 	const getAgentsInfo = async () => {
 		try {
-			// if (localStorage.getItem('agents') && localStorage.getItem('tasks')) {
-			// 	const storedAgentAndTaskData = {
-			// 		agents: JSON.parse(localStorage.getItem('agents')),
-			// 		tasks: JSON.parse(localStorage.getItem('tasks')),
-			// 	};
-			// 	setResponse(storedAgentAndTaskData);
-			// 	setAgents(storedAgentAndTaskData.agents);
-			// 	setTasks(storedAgentAndTaskData.tasks);
-			// 	setIsLoading(false);
-			// 	// res?.data ? setIsLoading(false) : null;
-			// } else {
-			const res = await axios.get(
-				`${import.meta.env.VITE_SERVER_URL}agents-info`
-				// formData,
-				// {
-				// 	headers: {
-				// 		'Content-Type': 'multipart/form-data',
-				// 	},
-				// }
+			const res = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}agents-info`,
+				formData,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
+				}
 			);
-			// console.log(res.data);
+
 			setResponse(res.data);
 			setAgents(res.data?.agents);
 			setTasks(res.data?.tasks);
-			// res?.data ? setIsLoading(false) : null;
 			localStorage.setItem('agents', JSON.stringify(res.data?.agents));
 			localStorage.setItem('tasks', JSON.stringify(res.data?.tasks));
 			// }
@@ -146,11 +124,6 @@ const AgentDetails = () => {
 		updatedTasks[key] = { ...updatedTasks[key], ...updatedTask };
 		setTasks(updatedTasks);
 		localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-		// console.log('All Tasks: ', tasks);
-		// console.log('All Updated Tasks: ', updatedTasks);
-
-		// console.log('Updated Task: ', updatedTask);
 
 		const data = {
 			task_name: updatedTask[key].task_name,
@@ -276,6 +249,7 @@ const AgentDetails = () => {
 						<Loading />
 					) : (
 						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 '>
+							{/* // <div className='flex flex-row flex-wrap gap-8 '> */}
 							{tasks &&
 								Object.keys(tasks).map((key) => (
 									<div key={key}>
